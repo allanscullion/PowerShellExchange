@@ -42,7 +42,7 @@ if ($users) {
         Get-MailboxFolderStatistics $user.DisplayName | Select Name,FolderSize,ItemsinFolder |
             Where-Object {$_.FolderSize -gt ($f * 1024 * 1024) -and $_.Name -ne "Deletions"} |
             sort FolderSize -Descending | 
-            Format-Table
+            Format-Table -AutoSize
     }
 } else {
     "*** Nothing to report."
