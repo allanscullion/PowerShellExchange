@@ -44,4 +44,6 @@ if ($users) {
             sort FolderSize -Descending | 
             Format-Table
     }
+} else {
+    "*** Nothing to report."
 }
