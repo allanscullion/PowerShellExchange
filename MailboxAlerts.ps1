@@ -2,10 +2,10 @@
 
 <# 
 .SYNOPSIS  
-    Emails the output of ExchGetMailboxSizes.ps1
+    Emails the output of ExchGetMailboxSizes.ps1 and GetLargeMailboxes.ps1
 
 .DESCRIPTION  
-    Emails the output of ExchGetMailboxSizes.ps1
+    Emails the output of ExchGetMailboxSizes.ps1 and GetLargeMailboxes.ps1
     For use as a scheduled mailbox size alert tool
 
 .NOTES  
@@ -14,12 +14,22 @@
     Prerequisite   : PowerShell V2, Exchange modules
 #>
 
-$messageParameters = @{
+$messageParameters1 = @{
     Subject = "[Exchange Report] Mailbox Sizes"
     Body = (.\ExchGetMailboxSizes.ps1 | Out-String)
-    From = "me@mydomain.com"
-    To = "whoever@mydomain.com"
-    SmtpServer = "smtpserveraddress"
+    From = "server@mydomain.com"
+    To = "me@mydomain.com"
+    SmtpServer = "my-smtp-server"
 }
 
-Send-MailMessage @messageParameters
+Send-MailMessage @messageParameters1
+
+$messageParameters2 = @{
+    Subject = "[Exchange Report] Large Mailboxes"
+    Body = (.\GetLargeMailboxes.ps1 -gt 4000 -f 100 | Out-String)
+    From = "server@mydomain.com"
+    To = "me@mydomain.com"
+    SmtpServer = "my-smtp-server"
+}
+
+Send-MailMessage @messageParameters2
